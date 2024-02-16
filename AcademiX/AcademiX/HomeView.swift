@@ -15,6 +15,20 @@ struct HomeView: View {
 
     var body: some View {
         VStack {
+            // Title Heading
+            Text("Welcome to AcademiX")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            // Logo
+            Image("AcademiXLogo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 400, height: 400)
+            
+  
+            
+//            Spacer() // Pushes the content to the top
+            
             TextField("First Name", text: $firstName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
