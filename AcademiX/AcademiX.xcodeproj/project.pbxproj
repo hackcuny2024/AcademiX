@@ -20,6 +20,7 @@
 		B61B02F62B7FEB78006DA3C0 /* AcademiXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61B02F52B7FEB78006DA3C0 /* AcademiXUITests.swift */; };
 		B61B02F82B7FEB78006DA3C0 /* AcademiXUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61B02F72B7FEB78006DA3C0 /* AcademiXUITestsLaunchTests.swift */; };
 		B61B03132B8050A5006DA3C0 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61B03122B8050A5006DA3C0 /* CustomTabBar.swift */; };
+		B61B03152B80859D006DA3C0 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61B03142B80859D006DA3C0 /* CreateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		B61B02F52B7FEB78006DA3C0 /* AcademiXUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcademiXUITests.swift; sourceTree = "<group>"; };
 		B61B02F72B7FEB78006DA3C0 /* AcademiXUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcademiXUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B61B03122B8050A5006DA3C0 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		B61B03142B80859D006DA3C0 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				0E273A472B80210600FFBF61 /* ChatView.swift */,
 				0E273A452B80210600FFBF61 /* CourseView.swift */,
 				0E273A482B80210600FFBF61 /* HomeView.swift */,
+				B61B03142B80859D006DA3C0 /* CreateView.swift */,
 				B61B02DA2B7FEB76006DA3C0 /* AcademiXApp.swift */,
 				B61B02DC2B7FEB76006DA3C0 /* ContentView.swift */,
 				B61B02DE2B7FEB77006DA3C0 /* Assets.xcassets */,
@@ -281,6 +284,7 @@
 				B61B02DD2B7FEB76006DA3C0 /* ContentView.swift in Sources */,
 				B61B02DB2B7FEB76006DA3C0 /* AcademiXApp.swift in Sources */,
 				0E273A4D2B80210600FFBF61 /* HomeView.swift in Sources */,
+				B61B03152B80859D006DA3C0 /* CreateView.swift in Sources */,
 				B61B03132B8050A5006DA3C0 /* CustomTabBar.swift in Sources */,
 				0E273A4A2B80210600FFBF61 /* CourseView.swift in Sources */,
 			);

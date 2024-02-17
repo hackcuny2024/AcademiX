@@ -2,8 +2,9 @@ import SwiftUI
 
 // The main view displaying a list of courses
 struct CourseView: View {
-    @State private var showingSignUp = false
-    let courses = ["Computer Science 101", "Philosophy 202", "Mathematics 303"] // Sample courses
+    @State private var showingHomeView = false
+    @State private var showingCreateView = false
+    let courses = ["Computer Science 101", "Philosophy 202", "Mathematics 303"]
 
     var body: some View {
         NavigationView {
@@ -15,13 +16,33 @@ struct CourseView: View {
             .navigationTitle("My Courses")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Sign Up") {
-                        showingSignUp = true
+                    Button(action: {
+                        showingHomeView = true
+                    }) {
+                        HStack {
+                            Image(systemName: "person.fill.badge.plus")
+                            Text("Join")
+                                .font(Font.custom("Menlo Regular", size: 16))
+                        }
+                    }
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        showingCreateView = true
+                    }) {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Create")
+                                .font(Font.custom("Menlo Regular", size: 16))
+                        }
                     }
                 }
             }
-            .sheet(isPresented: $showingSignUp) {
-                HomeView() // Present the HomeView when "Sign Up" is tapped
+            .sheet(isPresented: $showingHomeView) {
+                HomeView() // Present the HomeView when "Join" is tapped
+            }
+            .sheet(isPresented: $showingCreateView) {
+                CreateView() // Present the CreateView when "Create" is tapped
             }
         }
     }
@@ -37,6 +58,7 @@ struct CourseRow: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 40, height: 30)
+                .padding(15)
                 .padding(.trailing, 10)
 
             Text(courseName)

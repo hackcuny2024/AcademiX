@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  CreateView.swift
 //  AcademiX
 //
 //  Created by Olti Gjoni on 2/16/24.
@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct HomeView: View {
-    @State private var name: String = ""
+struct CreateView: View {
+    @State private var firstName: String = ""
+    @State private var lastName: String = ""
     @State private var classCode: String = ""
     @State private var isClassCodeViewPresented: Bool = false
     @State private var isPressed = false
@@ -17,7 +18,7 @@ struct HomeView: View {
     var body: some View {
         VStack {
             // Title Heading
-            Text("Join a Class")
+            Text("Create a Class")
                 .font(Font.custom("Menlo Regular", size: 30))
                 .fontWeight(.bold)
             // Logo
@@ -30,24 +31,26 @@ struct HomeView: View {
                 .shadow(color: .black, radius: 10, x: 0, y: 0) // Shadow effect
 
             // First Name TextField
-            TextField("Name", text: $name)
+            TextField("First Name", text: $firstName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .background(Color.white) // Background color of the TextField
                 .cornerRadius(10) // Rounded corners
                 .shadow(color: .gray, radius: 3, x: 0, y: 3) // Shadow effect
-                .frame(width: 300)
+                .frame(width: 150)
                 .font(Font.custom("Menlo Regular", size: 18))
                 .padding([.leading, .trailing], 40)
                 .padding([.top, .bottom], 5)
-            TextField("Class ID", text: $classCode)
+
+            // Last Name TextField
+            TextField("Last Name", text: $lastName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .background(Color.white) // Background color of the TextField
                 .cornerRadius(10) // Rounded corners
                 .shadow(color: .gray, radius: 3, x: 0, y: 3) // Shadow effect
-                .frame(width: 300)
+                .frame(width: 150)
                 .font(Font.custom("Menlo Regular", size: 18))
                 .padding([.leading, .trailing], 40)
-                .padding([.top, .bottom], 5)
+                .padding([.top, .bottom], 20)
 
             // Submit Button
             Button("Submit") {
@@ -64,51 +67,53 @@ struct HomeView: View {
                 self.isPressed = pressing
             }, perform: {})
             
-            .disabled(name.isEmpty)
-
+            .disabled(firstName.isEmpty || lastName.isEmpty)
+            .sheet(isPresented: $isClassCodeViewPresented) {
+//                ClassCodeView(classCode: $classCode)
+            }
         }
         // This line enforces light mode for this view
         .environment(\.colorScheme, .light)
     }
 }
-//
-//struct ClassCodeView: View {
-//    @Binding var classCode: String
-//
-//    var body: some View {
-//        ZStack{
-//            Image("AcademiXLogo")
-//                .resizable()
-//                .scaledToFill()
-//                .opacity(0.1) // Adjust the opacity to make the logo more or less transparent
-//                .edgesIgnoringSafeArea(.all) // Make the image extend to the edges of the view
-//            VStack {
-//                TextField("Class Code", text: $classCode)
-//                    .textFieldStyle(RoundedBorderTextFieldStyle())
-//                    .padding(10)
-//                    .font(Font.custom("Menlo Regular", size: 18))
-//                    .background(Color.black)
-//                    .cornerRadius(5)
-//                    .frame(width: 150)
-//
-//
-//                Button("Submit") {
-//                    // Handle the submission of the class code
-//                }
-//                .padding(10)
-//                .font(Font.custom("Menlo Regular", size: 18))
-//                .background(Color.black)
-//                .foregroundColor(.white)
-//                .cornerRadius(5)
-//            }
-//        }
-//        
-//    }
-//}
 
-struct HomeView_Previews: PreviewProvider {
+struct CreateClassCodeView: View {
+    @Binding var classCode: String
+
+    var body: some View {
+        ZStack{
+            Image("AcademiXLogo")
+                .resizable()
+                .scaledToFill()
+                .opacity(0.1) // Adjust the opacity to make the logo more or less transparent
+//                .edgesIgnoringSafeArea(.all) // Make the image extend to the edges of the view
+            VStack {
+                TextField("Class Code", text: $classCode)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(10)
+                    .font(Font.custom("Menlo Regular", size: 18))
+                    .background(Color.black)
+                    .cornerRadius(5)
+                    .frame(width: 150)
+
+
+                Button("Submit") {
+                    // Handle the submission of the class code
+                }
+                .padding(10)
+                .font(Font.custom("Menlo Regular", size: 18))
+                .background(Color.black)
+                .foregroundColor(.white)
+                .cornerRadius(5)
+            }
+        }
+        
+    }
+}
+
+struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        CreateView()
             // This line enforces light mode for the preview
             .environment(\.colorScheme, .light)
     }
