@@ -1,17 +1,20 @@
 import SwiftUI
 
-// The main view displaying a list of courses
+struct Course: Identifiable, Decodable {
+    let id: String
+    let name: String
+}
+
 struct CourseView: View {
     @State private var showingHomeView = false
     @State private var showingCreateView = false
-    
-    let courses = ["Computer Science 101", "Philosophy 202", "Mathematics 303"]
+    @State private var courses: [Course] = []
     
     var body: some View {
         NavigationView {
-            List(courses, id: \.self) { course in
-                NavigationLink(destination: ChatView()) { // Updated this line
-                    CourseRow(courseName: course)
+            List(courses) { course in
+                NavigationLink(destination: ChatView()) {
+                    CourseRow(courseName: course.name)
                 }
             }
             .navigationTitle("My Courses")
@@ -39,18 +42,50 @@ struct CourseView: View {
                     }
                 }
             }
-            
             .sheet(isPresented: $showingHomeView) {
-                HomeView() // Present the HomeView when "Join" is tapped
+                HomeView()
             }
             .sheet(isPresented: $showingCreateView) {
-                CreateView() // Present the CreateView when "Create" is tapped
+                CreateView()
             }
+            .onAppear {
+                fetchCourses()
+            }
+        }
+    }
+    
+    func fetchCourses() {
+        let courseIDs = ["527f0a01-1f83-40cb-8929-fcb5d47b5438"]
+        var fetchedCourses: [Course] = []
+
+        let group = DispatchGroup()
+
+        for courseID in courseIDs {
+            guard let url = URL(string: "http://217.25.90.34:8500/api/classes/\(courseID)") else {
+                print("Invalid URL for course ID: \(courseID)")
+                continue
+            }
+
+            group.enter()
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                defer { group.leave() }
+
+                if let data = data, let decodedResponse = try? JSONDecoder().decode(Course.self, from: data) {
+                    DispatchQueue.main.async {
+                        fetchedCourses.append(decodedResponse)
+                    }
+                } else {
+                    print("Fetch failed for course ID: \(courseID), error: \(error?.localizedDescription ?? "Unknown error")")
+                }
+            }.resume()
+        }
+
+        group.notify(queue: .main) {
+            self.courses = fetchedCourses.sorted(by: { $0.name < $1.name })
         }
     }
 }
 
-// Define a view for each row in the list
 struct CourseRow: View {
     var courseName: String
 
@@ -71,7 +106,6 @@ struct CourseRow: View {
     }
 }
 
-// Preview provider for SwiftUI previews
 struct CourseView_Previews: PreviewProvider {
     static var previews: some View {
         CourseView()
