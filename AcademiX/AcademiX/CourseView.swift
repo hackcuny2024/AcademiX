@@ -4,8 +4,9 @@ import SwiftUI
 struct CourseView: View {
     @State private var showingHomeView = false
     @State private var showingCreateView = false
+    
     let courses = ["Computer Science 101", "Philosophy 202", "Mathematics 303"]
-
+    
     var body: some View {
         NavigationView {
             List(courses, id: \.self) { course in
@@ -38,13 +39,17 @@ struct CourseView: View {
                     }
                 }
             }
+            
             .sheet(isPresented: $showingHomeView) {
                 HomeView() // Present the HomeView when "Join" is tapped
             }
             .sheet(isPresented: $showingCreateView) {
                 CreateView() // Present the CreateView when "Create" is tapped
             }
+            
         }
+        //--------------------------------------------
+
     }
 }
 

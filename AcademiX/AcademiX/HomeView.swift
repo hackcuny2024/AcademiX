@@ -69,8 +69,19 @@ struct HomeView: View {
         }
         // This line enforces light mode for this view
         .environment(\.colorScheme, .light)
+        
+        
     }
 }
+ 
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
+            // This line enforces light mode for the preview
+            .environment(\.colorScheme, .light)
+    }
+}
+
 //
 //struct ClassCodeView: View {
 //    @Binding var classCode: String
@@ -102,14 +113,6 @@ struct HomeView: View {
 //                .cornerRadius(5)
 //            }
 //        }
-//        
+//
 //    }
 //}
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-            // This line enforces light mode for the preview
-            .environment(\.colorScheme, .light)
-    }
-}

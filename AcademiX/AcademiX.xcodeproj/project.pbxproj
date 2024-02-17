@@ -21,6 +21,7 @@
 		B61B02F82B7FEB78006DA3C0 /* AcademiXUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61B02F72B7FEB78006DA3C0 /* AcademiXUITestsLaunchTests.swift */; };
 		B61B03132B8050A5006DA3C0 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61B03122B8050A5006DA3C0 /* CustomTabBar.swift */; };
 		B61B03152B80859D006DA3C0 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61B03142B80859D006DA3C0 /* CreateView.swift */; };
+		B61B03172B8099B7006DA3C0 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61B03162B8099B7006DA3C0 /* TestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		B61B02F72B7FEB78006DA3C0 /* AcademiXUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcademiXUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B61B03122B8050A5006DA3C0 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		B61B03142B80859D006DA3C0 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
+		B61B03162B8099B7006DA3C0 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		B61B03182B809E26006DA3C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +111,7 @@
 		B61B02D92B7FEB76006DA3C0 /* AcademiX */ = {
 			isa = PBXGroup;
 			children = (
+				B61B03182B809E26006DA3C0 /* Info.plist */,
 				B61B03122B8050A5006DA3C0 /* CustomTabBar.swift */,
 				0E273A462B80210600FFBF61 /* AcademicXLogo.png */,
 				0E273A492B80210600FFBF61 /* Assets.xcassets */,
@@ -115,6 +119,7 @@
 				0E273A452B80210600FFBF61 /* CourseView.swift */,
 				0E273A482B80210600FFBF61 /* HomeView.swift */,
 				B61B03142B80859D006DA3C0 /* CreateView.swift */,
+				B61B03162B8099B7006DA3C0 /* TestView.swift */,
 				B61B02DA2B7FEB76006DA3C0 /* AcademiXApp.swift */,
 				B61B02DC2B7FEB76006DA3C0 /* ContentView.swift */,
 				B61B02DE2B7FEB77006DA3C0 /* Assets.xcassets */,
@@ -284,6 +289,7 @@
 				B61B02DD2B7FEB76006DA3C0 /* ContentView.swift in Sources */,
 				B61B02DB2B7FEB76006DA3C0 /* AcademiXApp.swift in Sources */,
 				0E273A4D2B80210600FFBF61 /* HomeView.swift in Sources */,
+				B61B03172B8099B7006DA3C0 /* TestView.swift in Sources */,
 				B61B03152B80859D006DA3C0 /* CreateView.swift in Sources */,
 				B61B03132B8050A5006DA3C0 /* CustomTabBar.swift in Sources */,
 				0E273A4A2B80210600FFBF61 /* CourseView.swift in Sources */,
@@ -453,6 +459,7 @@
 				DEVELOPMENT_TEAM = BGK3XF757S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AcademiX/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -482,6 +489,7 @@
 				DEVELOPMENT_TEAM = BGK3XF757S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AcademiX/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

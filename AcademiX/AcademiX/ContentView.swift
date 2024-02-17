@@ -22,7 +22,7 @@ struct ContentView: View {
         case .calendar:
             ChatView()
         case .gearshape:
-            Text("Settings")
+            TestView()
         }
     }
     
