@@ -158,5 +158,8 @@ struct ClassCreationRequest: Codable {
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
         CreateView()
+        // This line enforces light mode for the preview
+        .environment(\.colorScheme, .light)
     }
 }
+
