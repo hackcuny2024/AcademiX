@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CreateView: View {
-    @State private var firstName: String = ""
-    @State private var lastName: String = ""
-    @State private var classCode: String = ""
+    @State private var adminName: String = ""
+    @State private var className: String = ""
+    @State private var classInfo: String = ""
     @State private var isClassCodeViewPresented: Bool = false
     @State private var isPressed = false
 
@@ -31,26 +31,33 @@ struct CreateView: View {
                 .shadow(color: .black, radius: 10, x: 0, y: 0) // Shadow effect
 
             // First Name TextField
-            TextField("First Name", text: $firstName)
+            TextField("Admin Name (required)", text: $adminName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .background(Color.white) // Background color of the TextField
                 .cornerRadius(10) // Rounded corners
                 .shadow(color: .gray, radius: 3, x: 0, y: 3) // Shadow effect
-                .frame(width: 150)
+                .frame(width: 300)
                 .font(Font.custom("Menlo Regular", size: 18))
                 .padding([.leading, .trailing], 40)
                 .padding([.top, .bottom], 5)
-
-            // Last Name TextField
-            TextField("Last Name", text: $lastName)
+            TextField("Class Name (required)", text: $className)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .background(Color.white) // Background color of the TextField
                 .cornerRadius(10) // Rounded corners
                 .shadow(color: .gray, radius: 3, x: 0, y: 3) // Shadow effect
-                .frame(width: 150)
+                .frame(width: 300)
                 .font(Font.custom("Menlo Regular", size: 18))
                 .padding([.leading, .trailing], 40)
-                .padding([.top, .bottom], 20)
+                .padding([.top, .bottom], 5)
+            TextField("Class Information", text: $classInfo)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .background(Color.white) // Background color of the TextField
+                .cornerRadius(10) // Rounded corners
+                .shadow(color: .gray, radius: 3, x: 0, y: 3) // Shadow effect
+                .frame(width: 300, height: 30)
+                .font(Font.custom("Menlo Regular", size: 18))
+                .padding([.leading, .trailing], 40)
+                .padding([.top, .bottom], 5)
 
             // Submit Button
             Button("Submit") {
@@ -67,13 +74,15 @@ struct CreateView: View {
                 self.isPressed = pressing
             }, perform: {})
             
-            .disabled(firstName.isEmpty || lastName.isEmpty)
-            .sheet(isPresented: $isClassCodeViewPresented) {
-//                ClassCodeView(classCode: $classCode)
-            }
+            .disabled(adminName.isEmpty)
+            .disabled(className.isEmpty)
+
+
         }
         // This line enforces light mode for this view
         .environment(\.colorScheme, .light)
+        
+        
     }
 }
 
