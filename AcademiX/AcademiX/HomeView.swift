@@ -12,13 +12,14 @@ struct HomeView: View {
     @State private var lastName: String = ""
     @State private var classCode: String = ""
     @State private var isClassCodeViewPresented: Bool = false
+    @State private var isPressed = false
+
 
     var body: some View {
         VStack {
             // Title Heading
             Text("Welcome to AcademiX")
                 .font(Font.custom("Menlo Regular", size: 30))
-
                 .fontWeight(.bold)
             // Logo
             Image("AcademiXLogo")
@@ -27,51 +28,51 @@ struct HomeView: View {
                 .frame(width: 400, height: 400)
                 .padding(.bottom, -100)
                 .padding(.top, -75)
-                .shadow(color: .black, radius: 40, x: 0, y: 0) // Shadow effect
-            
-            
-  
-    
+                .shadow(color: .black, radius: 10, x: 0, y: 0) // Shadow effect
+
+            // First Name TextField
             TextField("First Name", text: $firstName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .background(Color.white) // Background color of the TextField
                 .cornerRadius(10) // Rounded corners
-                .shadow(color: .gray, radius: 5, x: 0, y: 3) // Shadow effect
+                .shadow(color: .gray, radius: 3, x: 0, y: 3) // Shadow effect
                 .frame(width: 150)
                 .font(Font.custom("Menlo Regular", size: 18))
                 .padding([.leading, .trailing], 40)
                 .padding([.top, .bottom], 5)
 
-            
-
-            
+            // Last Name TextField
             TextField("Last Name", text: $lastName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .background(Color.white) // Background color of the TextField
                 .cornerRadius(10) // Rounded corners
-                .shadow(color: .gray, radius: 5, x: 0, y: 3) // Shadow effect
+                .shadow(color: .gray, radius: 3, x: 0, y: 3) // Shadow effect
                 .frame(width: 150)
                 .font(Font.custom("Menlo Regular", size: 18))
                 .padding([.leading, .trailing], 40)
-                .padding([.top, .bottom], 5)
+                .padding([.top, .bottom], 20)
 
-            
+            // Submit Button
             Button("Submit") {
-                
-                // This is where you would typically validate the first name and last name
-                
-                // and potentially prepare to navigate to the next view.
-                
-                // For simplicity, we'll just set isClassCodeViewPresented to true.
-                
                 self.isClassCodeViewPresented = true
             }
+            .padding(10)
+            .background(Color.black)
+            .foregroundColor(.white)
+            .cornerRadius(5)
+            .scaleEffect(isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: isPressed)
+            .onLongPressGesture(minimumDuration: .infinity, maximumDistance: .infinity, pressing: { pressing in
+                self.isPressed = pressing
+            }, perform: {})
+            
             .disabled(firstName.isEmpty || lastName.isEmpty)
-            .padding()
             .sheet(isPresented: $isClassCodeViewPresented) {
                 ClassCodeView(classCode: $classCode)
             }
         }
+        // This line enforces light mode for this view
+        .environment(\.colorScheme, .light)
     }
 }
 
@@ -84,21 +85,18 @@ struct ClassCodeView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
 
-            // You could add a button here to "submit" the class code.
             Button("Submit") {
-                // This is where you would typically validate the first name and last name
-                // and potentially prepare to navigate to the next view.
-                // For simplicity, we'll just set isClassCodeViewPresented to true.
+                // Handle the submission of the class code
             }
-            // For example, a button that does something with the class code
-            // like checking it against a database or adding the user to a class.
+            .padding()
         }
-        .padding()
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+            // This line enforces light mode for the preview
+            .environment(\.colorScheme, .light)
     }
 }
