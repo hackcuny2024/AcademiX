@@ -20,7 +20,7 @@ struct ContentView: View {
         case .book:
             CourseView() // This is where you want to show the CourseView
         case .calendar:
-            ChatView()
+            CalendarView()
         case .gearshape:
             TestView()
         }
