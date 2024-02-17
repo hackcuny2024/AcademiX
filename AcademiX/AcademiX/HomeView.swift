@@ -17,30 +17,53 @@ struct HomeView: View {
         VStack {
             // Title Heading
             Text("Welcome to AcademiX")
-                .font(.largeTitle)
+                .font(Font.custom("Menlo Regular", size: 30))
+
                 .fontWeight(.bold)
             // Logo
             Image("AcademiXLogo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 400, height: 400)
+                .padding(.bottom, -100)
+                .padding(.top, -75)
+                .shadow(color: .black, radius: 40, x: 0, y: 0) // Shadow effect
+            
             
   
-            
-//            Spacer() // Pushes the content to the top
-            
+    
             TextField("First Name", text: $firstName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+                .background(Color.white) // Background color of the TextField
+                .cornerRadius(10) // Rounded corners
+                .shadow(color: .gray, radius: 5, x: 0, y: 3) // Shadow effect
+                .frame(width: 150)
+                .font(Font.custom("Menlo Regular", size: 18))
+                .padding([.leading, .trailing], 40)
+                .padding([.top, .bottom], 5)
+
+            
+
             
             TextField("Last Name", text: $lastName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+                .background(Color.white) // Background color of the TextField
+                .cornerRadius(10) // Rounded corners
+                .shadow(color: .gray, radius: 5, x: 0, y: 3) // Shadow effect
+                .frame(width: 150)
+                .font(Font.custom("Menlo Regular", size: 18))
+                .padding([.leading, .trailing], 40)
+                .padding([.top, .bottom], 5)
+
             
             Button("Submit") {
+                
                 // This is where you would typically validate the first name and last name
+                
                 // and potentially prepare to navigate to the next view.
+                
                 // For simplicity, we'll just set isClassCodeViewPresented to true.
+                
                 self.isClassCodeViewPresented = true
             }
             .disabled(firstName.isEmpty || lastName.isEmpty)
