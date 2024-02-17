@@ -110,31 +110,43 @@ struct ChatArea: View {
     @Binding var message: String // message input by user
 
     var body: some View {
-        VStack {
-            Text(" \(selectedChannel)")
-                .font(.headline)
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.gray.opacity(0.15)) // background color for the title area
+        ZStack{
+            Image("AcademiXLogo")
+//                .resizable()
+                .scaledToFill()
+                .opacity(0.1) // Adjust the opacity to make the logo more or less transparent
+//                .edgesIgnoringSafeArea(.all) // Make the image extend to the edges of the view
+            VStack {
+                Text(" \(selectedChannel)")
+                    .font(Font.custom("Menlo Regular", size: 22))
+                    .font(.headline)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.gray.opacity(0.15)) // background color for the title area
 
-            // scrollable area for messages
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 10) {
-                    ForEach(0..<20, id: \.self) { _ in
-                        MessageView(username: "John Doe", content: "When's the homework due?")
+                // scrollable area for messages
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 10) {
+                        ForEach(0..<20, id: \.self) { _ in
+                            MessageView(username: "John Doe", content: "When's the homework due?")
+                                .font(Font.custom("Menlo Regular", size: 16))
+                        }
                     }
+                    .padding()
                 }
+                
+                // message input area
+                HStack {
+                    TextField("Message \(selectedChannel)", text: $message)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Button("Send", action: sendMessage) // button to send a message
+                }
+                .font(Font.custom("Menlo Regular", size: 16))
                 .padding()
             }
-            
-            // message input area
-            HStack {
-                TextField("Message \(selectedChannel)", text: $message)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Button("Send", action: sendMessage) // button to send a message
-            }
-            .padding()
         }
+
+ 
         .background(Color.white) // background color for the chat area
     }
     
