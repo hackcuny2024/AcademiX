@@ -10,7 +10,7 @@ struct CourseView: View {
     var body: some View {
         NavigationView {
             List(courses, id: \.self) { course in
-                NavigationLink(destination: Text("Details for \(course)")) {
+                NavigationLink(destination: ChatView()) { // Updated this line
                     CourseRow(courseName: course)
                 }
             }
@@ -46,10 +46,7 @@ struct CourseView: View {
             .sheet(isPresented: $showingCreateView) {
                 CreateView() // Present the CreateView when "Create" is tapped
             }
-            
         }
-        //--------------------------------------------
-
     }
 }
 
