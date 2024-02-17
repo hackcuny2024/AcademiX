@@ -24,7 +24,7 @@ struct SplashScreenView: View {
                         .frame(width: 400, height: 400)
                         .padding(.bottom, -100)
                         .padding(.top, -75)
-                    Text("Academix")
+                    Text("AcademiX")
                         .font(Font.custom("Menlo Regular", size: 40))
                         .foregroundColor(.black.opacity(0.80))
                 }

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UIKit // Import UIKit for haptic feedback
+
 
 enum Tab: String, CaseIterable {
     case book //books.vertical
@@ -24,6 +26,7 @@ enum Tab: String, CaseIterable {
 
 struct CustomTabBar: View {
     @Binding var selectedTab: Tab
+    
     private var fillImage: String {
         selectedTab.rawValue + ".fill"
     }
@@ -38,8 +41,14 @@ struct CustomTabBar: View {
             return .indigo
         }
     }
+    private func triggerHapticFeedback() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
+    }
     
     var body: some View {
+        
         VStack {
             HStack{
                 ForEach(Tab.allCases, id: \.rawValue) { tab in
@@ -49,6 +58,7 @@ struct CustomTabBar: View {
                             .foregroundColor(selectedTab == tab ? tabColor : .gray)
                             .font(.system(size: 22))
                             .onTapGesture{
+                                triggerHapticFeedback()
                                 withAnimation(.easeIn(duration: 0.1)){
                                     selectedTab = tab
                                 }
