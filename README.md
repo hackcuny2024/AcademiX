@@ -30,4 +30,4 @@ While the platform is running now, we are far from done. We want to truly transf
 - Introducing collaborative learning spaces where students can engage in group activities, discussions, and collaborative projects. Fostering a sense of community and shared learning experiences.
 
 
-# Join AcademiX To Start Your Transformative Edcuational Journey Today!
+# Join AcademiX To Start Your Transformative Educational Journey Today!
