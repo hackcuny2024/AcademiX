@@ -18,7 +18,7 @@ class ChatController: ObservableObject {
             messages = messagesByLanguage[selectedLanguage, default: []]
         }
     }
-    let openAI = OpenAI(apiToken: "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") // Securely manage your API key.
+    let openAI = OpenAI(apiToken: "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") // Securely manage your API key, THIS IS AN EXAMPLE
 
     func sendNewMessage(content: String) {
         let userMessage = Message(content: content, isUser: true)
