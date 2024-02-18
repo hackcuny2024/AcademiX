@@ -55,12 +55,15 @@ struct CourseView: View {
     }
     
     func fetchCourses() {
-        let courseIDs = ["527f0a01-1f83-40cb-8929-fcb5d47b5438"]
+        guard let savedClassIDs = UserDefaults.standard.array(forKey: "joinedClassIDs") as? [String], !savedClassIDs.isEmpty else {
+            print("No saved class IDs")
+            return
+        }
+        
         var fetchedCourses: [Course] = []
-
         let group = DispatchGroup()
 
-        for courseID in courseIDs {
+        for courseID in savedClassIDs {
             guard let url = URL(string: "http://217.25.90.34:8500/api/classes/\(courseID)") else {
                 print("Invalid URL for course ID: \(courseID)")
                 continue
