@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 struct SplashScreenView: View {
     @State private var isActive: Bool = false
@@ -6,8 +7,8 @@ struct SplashScreenView: View {
     @State private var opacity: Double = 0.5
     @State private var rotation: Double = 0
     @State private var colorCycle: Double = 0.0
-    @State private var backgroundColor = Color.white
-    @State private var boxColor = Color.black // Box color will change based on background
+    @State private var backgroundColor = Color.white // Start with white background
+    @State private var audioPlayer: AVAudioPlayer?
 
     var body: some View {
         if isActive {
@@ -16,47 +17,69 @@ struct SplashScreenView: View {
             ZStack {
                 backgroundColor
                     .edgesIgnoringSafeArea(.all)
-                    .onChange(of: backgroundColor) { newValue in
-                        // Change box color based on background color for better visibility
-                        boxColor = newValue == Color.black ? .white : .black
-                    }
                 
                 VStack {
                     Image("AcademiXLogo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 400, height: 400)
-                        .padding(.bottom, -100)
-                        .padding(.top, -75)
                         .rotation3DEffect(.degrees(rotation), axis: (x: 0, y: 1, z: 0))
                         .hueRotation(Angle(degrees: colorCycle))
                         .scaleEffect(size)
-                    
-                    // Text with a background box
+                        .padding(.bottom, -100)
+                        .padding(.top, -75)
+
                     Text("AcademiX")
                         .font(Font.custom("Menlo Regular", size: 40))
                         .foregroundColor(.black.opacity(opacity))
-                        .padding() // Add padding around the text inside the box
-                        .background(boxColor.cornerRadius(10)) // Box with rounded corners
-                        .padding(.horizontal, 20) // Additional spacing around the box if needed
+                        .background(Color.white.cornerRadius(10)) // White box around the text for better readability
+                        .padding(.horizontal, 20) // Horizontal padding for the box around the text
                 }
                 .onAppear {
-                    withAnimation(Animation.easeInOut(duration: 2.5).repeatCount(5, autoreverses: true)) {
+                    playSound(soundName: "loading", volume: 0.2) // Reduced initial volume for more quiet sound
+                    withAnimation(Animation.easeInOut(duration: 3)) {
                         self.size = 1.1
                         self.opacity = 1.0
                         self.rotation = 360
                         self.colorCycle = 360
                     }
-                    
-                    withAnimation(Animation.easeInOut(duration: 2.5).repeatCount(5, autoreverses: true)) {
-                        self.backgroundColor = Color.black // Start with black background
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                        withAnimation(Animation.easeOut(duration: 0.5)) {
+                            self.isActive = true
+                        }
+                        fadeOutSound(duration: 2) // Fade out the sound smoothly over 2 seconds
                     }
                 }
             }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + (2.5 * 10)) { // Adjust total duration to match your animation
-                    self.isActive = true
-                }
+        }
+    }
+
+    func playSound(soundName: String, volume: Float) {
+        guard let path = Bundle.main.path(forResource: soundName, ofType: "mp3") else { return }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+            audioPlayer?.volume = volume // Set lower initial volume
+            audioPlayer?.play()
+        } catch {
+            print("Unable to load the sound file.")
+        }
+    }
+
+    func fadeOutSound(duration: TimeInterval) {
+        guard let player = audioPlayer, player.volume > 0.0 else {
+            return
+        }
+
+        let fadeOutSteps = 20
+        let fadeOutStepDuration = duration / Double(fadeOutSteps)
+        let volumeDecrement = player.volume / Float(fadeOutSteps)
+
+        Timer.scheduledTimer(withTimeInterval: fadeOutStepDuration, repeats: true) { timer in
+            if player.volume > 0.0 {
+                player.volume -= volumeDecrement
+            } else {
+                player.stop()
+                timer.invalidate()
             }
         }
     }
