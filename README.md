@@ -21,4 +21,11 @@ As any journey, we encountered an array of issues that required specific solutio
 ## **The Result: A Vision Realized**
 **AcademiX** stands today as a testament to the vision of a comprehensive educational platform. Witness the transformation as students navigate their learning journey effortlessly, armed with an intuitive interface and the support of an advanced AI companion.
 
+## **Future Plans**
+### **1. Global Language Support:**
+- We are committed to broadening language support, making AcademiX accessible to learners worldwide. Stay tuned for updates on new language additions.
+### **2. Collaborative Learning Spaces:**
+- Introducing collaborative learning spaces where students can engage in group activities, discussions, and collaborative projects. Fostering a sense of community and shared learning experiences.
+
+
 # Join AcademiX To Start Your Transformative Edcuational Journey Today!
