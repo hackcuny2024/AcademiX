@@ -14,6 +14,10 @@ We envisioned a simple platform that combines simplicity and practicality. Under
 ## **Challenges Faced**
 As any journey, we encountered an array of issues that required specific solutions. Balancing advanced technology with user simplicity posed a unique hurdle. Ensuring the AI chatbot's linguistic versatility and accuracy required meticulous training and testing.
 
+### **Overcoming Adversity**
+- As a complicated interface would harm our vision, we honed into the most important features and maximized their potential.
+- Trained our AI chatbot with the latest technology and all of the information we had to make sure of its language expertise. 
+
 ## **The Result: A Vision Realized**
 **AcademiX** stands today as a testament to the vision of a comprehensive educational platform. Witness the transformation as students navigate their learning journey effortlessly, armed with an intuitive interface and the support of an advanced AI companion.
 
