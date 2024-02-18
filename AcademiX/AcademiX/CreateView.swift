@@ -1,4 +1,7 @@
+
+
 import SwiftUI
+
 
 enum APIError2: Error {
     case invalidURL
@@ -19,6 +22,7 @@ struct CreateView: View {
             Text("Create a Class")
                 .font(Font.custom("Menlo Regular", size: 30))
                 .fontWeight(.bold)
+
             Image("AcademiXLogo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -52,7 +56,7 @@ struct CreateView: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 .shadow(color: .gray, radius: 3, x: 0, y: 3)
-                .frame(width: 300, height: 30)
+                .frame(width: 300, height: 100)
                 .font(Font.custom("Menlo Regular", size: 18))
                 .padding([.leading, .trailing], 40)
                 .padding([.top, .bottom], 5)
@@ -91,17 +95,30 @@ struct CreateView: View {
         let classDetails = ClassCreationRequest(name: className, info: classInfo, admin_username: adminName)
         
         do {
-            let _ = try await postClass(classDetails: classDetails)
-            creationSuccess = true
-            errorText = nil
+            let createdClass = try await postClass(classDetails: classDetails)
+            DispatchQueue.main.async {
+                self.creationSuccess = true
+                self.errorText = nil
+                // Save to UserDefaults
+                saveCreatedClassData(classId: createdClass.id, adminName: adminName)
+            }
         } catch {
-            creationSuccess = false
-            errorText = "Failed to create class. Please try again."
+            DispatchQueue.main.async {
+                self.creationSuccess = false
+                self.errorText = "Failed to create class. Please try again."
+            }
         }
+    }
+    
+    func saveCreatedClassData(classId: String, adminName: String) {
+        var joinedClassIDs = UserDefaults.standard.array(forKey: "joinedClassIDs") as? [String] ?? []
+        joinedClassIDs.append(classId)
+        UserDefaults.standard.set(joinedClassIDs, forKey: "joinedClassIDs")
+        UserDefaults.standard.set(adminName, forKey: "classmateName")
     }
 }
 
-func postClass(classDetails: ClassCreationRequest) async throws -> Bool {
+func postClass(classDetails: ClassCreationRequest) async throws -> ClassCreatedResponse {
     let endpoint = "http://217.25.90.34:8500/api/classes"
     guard let url = URL(string: endpoint) else {
         throw APIError2.invalidURL
@@ -111,55 +128,41 @@ func postClass(classDetails: ClassCreationRequest) async throws -> Bool {
     request.httpMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     let encoder = JSONEncoder()
-    do {
-        let jsonData = try encoder.encode(classDetails)
-        request.httpBody = jsonData
-        print("Request URL: \(url)")
-        print("Request Body: \(String(data: jsonData, encoding: .utf8) ?? "")")
-    } catch {
-        print("Encoding Error: \(error)")
-        throw APIError2.invalidData
+    let jsonData = try encoder.encode(classDetails)
+    request.httpBody = jsonData
+    
+    let (data, response) = try await URLSession.shared.data(for: request)
+    guard let httpResponse = response as? HTTPURLResponse,
+          httpResponse.statusCode == 201 else {
+        throw APIError2.invalidResponse
     }
     
-    do {
-        let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError2.invalidResponse
-        }
-        
-        print("Status Code: \(httpResponse.statusCode)")
-        if let responseBody = String(data: data, encoding: .utf8) {
-            print("Response Body: \(responseBody)")
-        }
-        
-        guard (200...299).contains(httpResponse.statusCode) else {
-            throw APIError2.invalidResponse
-        }
-        
-        return true
-    } catch {
-        print("Networking Error: \(error)")
-        throw error
-    }
+    let createdClass = try JSONDecoder().decode(ClassCreatedResponse.self, from: data)
+    return createdClass
 }
 
 struct ClassCreationRequest: Codable {
     let name: String
     let info: String?
-    let admin_username: String // Use snake_case as expected by the server
+    let admin_username: String
+}
 
-    // Specify the mapping between the property names and the keys used in the JSON body of the request
-    enum CodingKeys: String, CodingKey {
-        case name, info
-        case admin_username = "admin_username"
-    }
+struct ClassCreatedResponse: Codable {
+    let id: String
+    let name: String
+    let info: String?
+    let admin_username: String
+    let sunday: String?
+    let monday: String?
+    let tuesday: String?
+    let wednesday: String?
+    let thursday: String?
+    let friday: String?
+    let saturday: String?
 }
 
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
         CreateView()
-        // This line enforces light mode for the preview
-        .environment(\.colorScheme, .light)
     }
 }
-
