@@ -19,7 +19,7 @@ enum Tab: String, CaseIterable {
         switch self {
         case .book: return "books.vertical"
         case .calendar: return "calendar.circle"
-        case .gearshape: return "gearshape"
+        case .gearshape: return "questionmark.bubble"
         }
     }
 }
