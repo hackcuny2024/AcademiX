@@ -5,10 +5,39 @@ struct Course: Identifiable, Decodable {
     let name: String
 }
 
+struct RandomColorOverlayModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        // Combine the content with a randomly colored overlay
+        content
+            .overlay(
+                Rectangle()
+                    .fill(Color.random.opacity(0.1)) // Change opacity as needed
+                    .blendMode(.overlay) // You can experiment with blend modes
+            )
+    }
+}
+
+extension View {
+    func randomColorOverlay() -> some View {
+        self.modifier(RandomColorOverlayModifier())
+    }
+}
+
+extension Color {
+    static var random: Color {
+        Color(
+            red: .random(in: 0...0.7),
+            green: .random(in: 0...0.7),
+            blue: .random(in: 0...0.7)
+        )
+    }
+}
+
 struct CourseView: View {
     @State private var showingHomeView = false
     @State private var showingCreateView = false
     @State private var courses: [Course] = []
+    @State private var backgroundImageName = "Background"
     
     var body: some View {
         NavigationView {
@@ -16,7 +45,19 @@ struct CourseView: View {
                 NavigationLink(destination: ChatView()) {
                     CourseRow(courseName: course.name)
                 }
+                .listRowBackground(
+                                    ZStack {
+                                        Color.random.opacity(0.5) // Apply random color with opacity
+                                        Image(backgroundImageName)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .opacity(0.1)
+                                    }
+                                )
+                Divider() // Add a divider after each course row
+                    .background(Color.black) // Set the color of the divider
             }
+            
             .navigationTitle("My Courses")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -41,7 +82,9 @@ struct CourseView: View {
                         }
                     }
                 }
+                
             }
+            
             .sheet(isPresented: $showingHomeView) {
                 HomeView()
             }
@@ -102,10 +145,15 @@ struct CourseRow: View {
                 .padding(.trailing, 10)
 
             Text(courseName)
-                .font(.title3)
-
+                .font(Font.custom("Menlo Regular", size: 17))
+                .padding(6)
+                .background(Color.white) // Set the background color to white
+                .cornerRadius(10) // Optionally, add a corner radius to smooth the edges
+        
             Spacer()
+    
         }
+        .padding(.vertical, 8) // Add padding to top and bottom of the row content
     }
 }
 

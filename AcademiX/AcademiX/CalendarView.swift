@@ -19,9 +19,12 @@ class WeekViewModel: ObservableObject {
         // Dummy data for demonstration
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
-        events.append(Event(title: "Math Class", date: formatter.date(from: "2024/02/11")!))
-        events.append(Event(title: "eng Class", date: formatter.date(from: "2024/02/13")!))
-        events.append(Event(title: "span Class", date: formatter.date(from: "2024/02/13")!))
+        events.append(Event(title: "MATH", date: formatter.date(from: "2024/02/12")!))
+        events.append(Event(title: "ENGL", date: formatter.date(from: "2024/02/13")!))
+        events.append(Event(title: "SPAN", date: formatter.date(from: "2024/02/13")!))
+        events.append(Event(title: "GERM", date: formatter.date(from: "2024/02/14")!))
+        events.append(Event(title: "CSCI", date: formatter.date(from: "2024/02/16")!))
+        events.append(Event(title: "ART", date: formatter.date(from: "2024/02/16")!))
 
         // Add more dummy events if needed for demonstration
     }
@@ -48,8 +51,9 @@ struct CalendarView: View {
                         VStack {
                             // Display date above day of the week
                             Text("\(self.dateFor(dayOfWeek: index + 1), formatter: DateFormatter.shortDate)")
-                                .font(.caption)
+                                .font(Font.custom("Menlo Regular", size: 8.4))
                                 .foregroundColor(.gray)
+                                .padding(.bottom, 1)
                             
                             Text(self.daysOfWeek[index])
                                 .font(.subheadline)
@@ -75,25 +79,39 @@ struct CalendarView: View {
             
             Divider()
           
-            VStack {
-                // Event Viewer section
-                Text("Event Overview")
-                    .font(Font.custom("Menlo Regular", size: 25))
-                    .padding()
-                List {
-                    
-                    
-                    ForEach(viewModel.events) { event in
-                        VStack(alignment: .leading) {
-                            Text(event.title)
-                                .font(Font.custom("Menlo Regular", size: 18))
-                            Text("\(event.date, formatter: DateFormatter.shortDate)")
-                                .font(.caption)
-                                .foregroundColor(.gray)
+            ZStack {
+                // Set the background for the entire screen area
+                
+                Image("Background2") // Replace "yourBackgroundImageName" with your actual image file name
+                    .resizable() // This will allow the image to resize to fit the container
+                    .edgesIgnoringSafeArea(.all) // Make sure it extends to the edges of the screen
+                    .opacity(0.08)
+
+
+                VStack {
+                    // Event Viewer section
+                    Text("Event Overview")
+                        .padding(12)
+                        .background(Color.white) // Set the background color to white
+                        .cornerRadius(12) // Optionally, add a corner radius to smooth the edges
+                        .font(Font.custom("Menlo Regular", size: 23))
+                        .padding()
+                    List {
+                        ForEach(viewModel.events) { event in
+                            HStack {
+                                Text(event.title)
+                                    .font(Font.custom("Menlo Regular", size: 18))
+                                
+                                Divider()
+                                Text("\(event.date, formatter: DateFormatter.shortDate)")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.vertical, 7)
                         }
-                        .padding(.vertical, 4)
                     }
                 }
+                .padding() // Adds some space between the edges of the screen and the VStack content
             }
             .frame(maxHeight: .infinity, alignment: .bottom) // Limit to bottom half of the screen
         }

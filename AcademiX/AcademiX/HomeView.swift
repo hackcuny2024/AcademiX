@@ -26,7 +26,7 @@ struct HomeView: View {
                 .frame(width: 400, height: 400)
                 .padding(.bottom, -100)
                 .padding(.top, -75)
-                .shadow(color: .black, radius: 10, x: 0, y: 0)
+                .shadow(color: .blue, radius: 10, x: 0, y: 0)
 
             TextField("Name", text: $name)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
